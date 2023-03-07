@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 import uvicorn
 
 import datamodel.models as models
-from datamodel.database import engine, SessionLocal
+from datamodel.database import engine, SessionLocal, get_db
 from sqlalchemy.orm import Session
 
 
@@ -22,14 +22,6 @@ app.add_middleware(
 
 
 models.Base.metadata.create_all(bind=engine)
-
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
-
 
 
 class Book(BaseModel):
